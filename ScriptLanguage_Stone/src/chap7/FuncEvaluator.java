@@ -50,7 +50,7 @@ import chap6.BasicEvaluator.BlockEx;
 				if (!(value instanceof Function))
 					throw new StoneException("bad function",this);
 				Function func = (Function)value;
-				ParamatorList params = func.parameters();
+				ParameterList params = func.parameters();
 				if (size() != params.size())
 					throw new StoneException("bad number of arguments", this);
 				Environment newEnv = func.makeEnv();
@@ -61,7 +61,7 @@ import chap6.BasicEvaluator.BlockEx;
 				return ((BlockEx)func.body()).eval(newEnv);
 			}
 		}
-		@Reviser public static class ParamsEx extends ParamatorList {
+		@Reviser public static class ParamsEx extends ParameterList {
 			public ParamsEx(List<ASTree> c) { super(c); }
 			public void eval(Environment env, int index, Object value) {
 				((EnvEx)env).putNew(name(index), value);
