@@ -5,7 +5,7 @@ import stone.StoneException;
 import chap6.Environment;
 
 public class Natives {
-	public Environment envrionment(Environment env) { 
+	public Environment environment(Environment env) { 
 		appendNatives(env);
 		return env;
 	}

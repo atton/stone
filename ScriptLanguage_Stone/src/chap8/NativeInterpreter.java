@@ -6,6 +6,6 @@ import chap7.NestedEnv;
 
 public class NativeInterpreter extends BasicInterpreter {
 	public static void main(String[] args) throws ParseException {
-		run(new ClosureParser(), new Natives().envrionment(new NestedEnv()));
+		run(new ClosureParser(), new Natives().environment(new NestedEnv()));
 	}
 }
