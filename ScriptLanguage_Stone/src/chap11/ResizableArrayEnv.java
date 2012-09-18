@@ -1,7 +1,5 @@
 package chap11;
 import java.util.Arrays;
-
-import javassist.compiler.ast.Symbol;
 import chap6.Environment;
 import chap11.EnvOptimizer.EnvEx2;
 
@@ -30,6 +28,14 @@ public class ResizableArrayEnv extends ArrayEnv {
 	}
 	@Override public void putNew(String name, Object value) {
 		assign(names.putNew(name), value);
+	}
+	@Override public Environment where(String name) {
+		if (names.find(name) != null)
+			return this;
+		else if (outer == null)
+			return null;
+		else
+			return ((EnvEx2)outer).where(name);
 	}
 	@Override public void put(int nest, int index, Object value) {
 		if (nest == 0)

@@ -37,7 +37,7 @@ import chap7.ClosureEvaluator;
 			size = FunEx.lookup(syms, parameters(), body());
 		}
 		public Object eval(Environment env) {
-			((EnvEx2)env).put(0, index,new OptFunction(parameters(), body(), env, size));
+			((EnvEx2)env).put(0, index, new OptFunction(parameters(), body(), env, size));
 			return name();
 		}
 	}
@@ -65,6 +65,9 @@ import chap7.ClosureEvaluator;
 			offsets = new int[s];
 			for (int i = 0; i < s; i++)
 				offsets[i] = syms.putNew(name(i));
+		}
+		public void eval(Environment env, int index, Object value) {
+			((EnvEx2)env).put(0, offsets[index], value);
 		}
 	}
 	@Reviser public static class NameEx extends Name {
