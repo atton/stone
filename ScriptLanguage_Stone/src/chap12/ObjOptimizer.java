@@ -2,7 +2,6 @@ package chap12;
 import java.util.ArrayList;
 import java.util.List;
 import static javassist.gluonj.GluonJ.revise;
-import javassist.compiler.ast.NewExpr;
 import javassist.gluonj.*;
 import stone.*;
 import stone.ast.*;
@@ -10,14 +9,13 @@ import chap6.Environment;
 import chap6.BasicEvaluator;
 import chap6.BasicEvaluator.ASTreeEx;
 import chap7.FuncEvaluator.PrimaryEx;
-import chap9.StoneObject.AccessException;
 import chap11.ArrayEnv;
 import chap11.EnvOptimizer;
 import chap11.Symbols;
 import chap11.EnvOptimizer.ASTreeOptEx;
 import chap11.EnvOptimizer.EnvEx2;
 import chap11.EnvOptimizer.ParamsEx;
-import chap12.OptStoneObject.AccesExceptino;
+import chap12.OptStoneObject.AccessException;
 
 @Require(EnvOptimizer.class)
 @Reviser public class ObjOptimizer {
@@ -60,7 +58,7 @@ import chap12.OptStoneObject.AccesExceptino;
 					if (i >= oldSize)
 						methods.add(def);
 					else
-						methods.add(i,def);
+						methods.set(i,def);
 					((DefStmntEx2)def).lookupAsMethod(fieldNames);
 				} else
 					((ASTreeOptEx)t).lookup(syms);
@@ -88,13 +86,14 @@ import chap12.OptStoneObject.AccesExceptino;
 					OptClassInfo ci = (OptClassInfo)value;
 					ArrayEnv newEnv = new ArrayEnv(1, ci.environment());
 					OptStoneObject so = new OptStoneObject(ci, ci.size());
-					newEnv.put(0, 0, newEnv);
+					newEnv.put(0, 0, so);
+					initObject(ci, so, newEnv);
 					return so;
 				}
 			} else if (value instanceof OptStoneObject) {
 				try { 
 					return ((OptStoneObject)value).read(member);
-				} catch(AccessException e) {}
+				} catch (AccessException e) {}
 			}
 			throw new StoneException("bad member access: " + member, this);
 		}

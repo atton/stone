@@ -1,15 +1,14 @@
 package chap12;
 
-import chap9.StoneObject.AccessException;
-
 public class OptStoneObject {
-	public static class AccesExceptino extends Exception {}
+	public static class AccessException extends Exception {}
 	protected OptClassInfo classInfo;
 	protected Object[] fields;
 	public OptStoneObject(OptClassInfo ci, int size) {
 		classInfo = ci;
 		fields = new Object[size];
 	}
+	public OptClassInfo classInfo() { return classInfo; }
 	public Object read(String name) throws AccessException {
 		Integer i = classInfo.fieldIndex(name);
 		if (i != null)
