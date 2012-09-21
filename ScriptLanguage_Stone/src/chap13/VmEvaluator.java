@@ -7,7 +7,7 @@ import chap6.Environment;
 import chap6.BasicEvaluator.ASTreeEx;
 import chap7.FuncEvaluator;
 import javassist.gluonj.*;
-import static chap13.Opecode.*;
+import static chap13.Opcode.*;
 import static javassist.gluonj.GluonJ.revise;
 import stone.ast.*;
 
@@ -36,7 +36,7 @@ import stone.ast.*;
 			int entry = code.position();
 			compile(code);
 			((EnvEx3)env).putNew(funcName,
-					new VmFunction(parameters(), body(), vmenv, entry));
+					new VmFunction(parameters(), body(), env, entry));
 			return funcName;
 		}
 		public void compile(Code c) {
@@ -104,7 +104,7 @@ import stone.ast.*;
 			} else {
 				c.add(MOVE);
 				c.add(encodeRegister(c.nextReg -1));
-				c.add(encodeShortOffset(index));
+				c.add(encodeOffset(index));
 			}
 		}
 	}
@@ -170,8 +170,8 @@ import stone.ast.*;
 				((ASTreeVmEx)operand()).compile(c);
 		}
 	}
-	@Reviser public static class ArgumentEx extends Arguments {
-		public ArgumentEx(List<ASTree> c) { super(c); }
+	@Reviser public static class ArgumentsEx extends Arguments {
+		public ArgumentsEx(List<ASTree> c) { super(c); }
 		public void compile(Code c) {
 			int newOffset = c.frameSize;
 			int numOfArgs = 0;
@@ -236,6 +236,7 @@ import stone.ast.*;
 			c.add(encodeShortOffset(0));
 			c.set(encodeShortOffset(c.position() -pos), pos +2);
 			ASTree b = elseBlock();
+			c.nextReg = oldReg;
 			if (b != null)
 				((ASTreeVmEx)b).compile(c);
 			else {

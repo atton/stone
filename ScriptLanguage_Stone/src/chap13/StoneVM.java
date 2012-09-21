@@ -1,5 +1,5 @@
 package chap13;
-import static chap13.Opecode.*;
+import static chap13.Opcode.*;
 import chap8.NativeFunction;
 import stone.StoneException;
 import stone.ast.ASTree;
@@ -64,7 +64,7 @@ public class StoneVM {
 			moveHeapValue();
 			break;
 		case IFZERO : {
-			Object value = registers[decodeOffset(code[pc + 1])];
+			Object value = registers[decodeRegister(code[pc + 1])];
 			if (value instanceof Integer && ((Integer)value).intValue() == 0)
 				pc += readShort(code, pc + 2);
 			else
@@ -221,9 +221,8 @@ public class StoneVM {
 	}
 	
 	public static int readInt(byte[] array, int index) {
-		return (array[index] << 24 | ((array[index + 1] & 0xff) << 16)
-				| ((array[index + 2]) & 0xff) << 8) | (array[index + 3] & 0xff);
-
+		return (array[index] << 24) | ((array[index + 1] & 0xff) << 16)
+				| ((array[index + 2] & 0xff) << 8) | (array[index + 3] & 0xff);
 	}
 	public static int readShort(byte[] array, int index) {
 		return (array[index] << 8) | (array[index + 1] & 0xff);

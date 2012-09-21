@@ -1,7 +1,7 @@
 package chap13;
 import stone.StoneException;
 
-public class Opecode {
+public class Opcode {
 	public static final byte ICONST = 1;	// load an integer
 	public static final byte BCONST = 2;	// load an 8bit (1byte) integer
 	public static final byte SCONST = 3;	//load a character string

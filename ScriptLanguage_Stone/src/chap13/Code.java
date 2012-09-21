@@ -14,7 +14,7 @@ public class Code {
 	}
 	public int position() { return codeSize; }
 	public void set(short value, int pos) {
-		svm.code()[pos] = (byte)(value >> 8);
+		svm.code()[pos] = (byte)(value >>> 8);
 		svm.code()[pos + 1] = (byte)value;
 	}
 	public void add(byte b) {
