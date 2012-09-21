@@ -30,6 +30,12 @@ public class Opecode {
 			return (byte)-(reg + 1);
 	}
 	public static int decodeRegister(byte operand) { return -1 - operand; }
+	public static byte encodeOffset(int offset) {
+		if (offset > Byte.MAX_VALUE)
+			throw new StoneException("too big byte offset");
+		else
+			return (byte)offset;
+	}
 	public static short encodeShortOffset(int offset) {
 		if (offset < Short.MIN_VALUE || Short.MAX_VALUE < offset)
 			throw new StoneException("too big short offset");
